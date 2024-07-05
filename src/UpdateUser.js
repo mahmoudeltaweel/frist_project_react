@@ -1,6 +1,6 @@
 // import axios from "axios";
 import { useEffect, useState } from "react";
-import Forms from "./components/Forms";
+import Forms from "./components/form/Forms";
 
 
 export default function UpdateUser() {
@@ -25,6 +25,7 @@ export default function UpdateUser() {
                 email={email}
                 Endpoint={`user/update/${id}`}
                 navigate={"/dashboard/users"}
+                buttonstyle={true}
                 /> 
     </div>
     

@@ -1,3 +1,4 @@
+import './index.css'
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -9,6 +10,21 @@ export default function Forms(props) {
   const[accept , setaccept]=useState(false);
   const[emailError , setEmailErroe]=useState("");
 
+  let styleRegister={
+      display:"flex",
+      justifyContent:"center",
+      alignItems:"center",
+      marginTop:"40px",
+      width:"500px"
+  }
+
+  const form ={
+    boxShadow:"12px 12px 2px 1px rgba(0, 0, 255,.2)",
+  }
+
+  const buttonstyle={
+    width:"100%"
+  }
   useEffect(()=>{
     setName(props.name);
     setEmail(props.email)
@@ -42,8 +58,8 @@ export default function Forms(props) {
   }
   
   return (
-      <div className="register">
-        <form onSubmit={submit}>
+      <div className="register" style={props.styleRegister && styleRegister}>
+        <form onSubmit={submit} style={props.styleRegister&&form} >
           <label htmlFor="name">Name</label>
           <input
             type="text"
@@ -83,7 +99,7 @@ export default function Forms(props) {
           {accept && passwordR !==password &&  <p className="Error">password does not match</p>}
 
           <div style={{ textAlign: "center" }}>
-            <button type="submit">{props.button}</button>
+            <button type="submit" style={props.buttonstyle && buttonstyle}>{props.button}</button>
           </div>
         </form>
       </div>
