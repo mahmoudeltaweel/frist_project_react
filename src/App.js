@@ -5,6 +5,7 @@ import Dashboard from "./Dashboard";
 import Home from "./components/Home";
 import Users from "./Users";
 import UpdateUser from "./UpdateUser";
+import CreateUser from "./CreateUser";
 
 function App() {
   
@@ -17,6 +18,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="users" element={<Users />} />
           <Route path="users/:id" element={<UpdateUser />} />
+          <Route path="user/create" element={<CreateUser />} />
         </Route>
       </Routes>
     </div>
