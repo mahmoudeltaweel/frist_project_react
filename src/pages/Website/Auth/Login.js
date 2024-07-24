@@ -1,43 +1,46 @@
 import axios from "axios";
-import { useState } from "react";
-import Header from "./components/Header";
+import { useContext, useState } from "react";
+import Header from "../../../components/Header";
+import './login.css'
+import { User } from "../context/UserContext";
+import { useNavigate } from "react-router";
+
 
 export default function Login() {
   const[email , setEmail]=useState("");
   const[password , setPaassword]=useState("");
   const[accept , setaccept]=useState(false);
-  const[emailError , setEmailErroe]=useState("");
+  const[err , setErr]=useState("");
  
+  const userNow= useContext(User);
+  const nav = useNavigate();
+
+
  async function submit(e) {
-    let flag=true;
     e.preventDefault();
     setaccept(true);
-    if( password.length < 8){
-     flag=false
-    }else{
-    flag=true
-    }
     try {
-    if(flag){
     let res = await axios
     .post("http://127.0.0.1:8000/api/login", {
           email:email,
           password:password,
      })
-     if(res.status===200){
-        window.localStorage.setItem("email" , email);
-        window.location.pathname="/";
-     }
-    }
+     console.log("res" , res);
+     const token =res.data.data.token;
+        const userDetails= res.data.data.user;
+        userNow.setAuth({token ,userDetails })
+        nav("/dashboard")
   }catch(err){
-     setEmailErroe(err.response.status);
+    if( err.response.status===401){
+     setErr( err.response.status);
+    }
   }
   }
   return (
     <>
     <Header />
-    <div className="parent">
-      <div className="register">
+    <div className="parent Login">
+      <div className="register Login" style={{boxShadow:"12px 12px 2px 1px rgba(0, 0, 255,.2)"}}>
         <form onSubmit={submit}>
          
           <label htmlFor="email">Email</label>
@@ -48,7 +51,6 @@ export default function Login() {
             value={email}
             onChange={(e)=>setEmail(e.target.value)}
           />
-          {accept && emailError === 401 && <p className="Error">the email not found </p>}
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -57,7 +59,7 @@ export default function Login() {
             value={password}
             onChange={(e)=>setPaassword(e.target.value)}
           />
-          { accept && password.length < 8 && <p className="Error">must be more than 8 chr</p>}
+          {accept && err === 401 && <p className="Error">wrong Email or password </p>}
           <div style={{ textAlign: "center" }}>
             <button type="submit">Login</button>
           </div>

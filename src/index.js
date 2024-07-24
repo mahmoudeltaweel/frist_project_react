@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom/client';
 import './style.css';
 import './all.min.css';
 import App from './App';
-import './dashboard.css';
+import './pages/Dashboard/dashboard.css';
 import { BrowserRouter } from "react-router-dom";
-
+import Userprovider from './pages/Website/context/UserContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
+  <Userprovider >
     <App  />
+    </Userprovider>
     </BrowserRouter>
 );
 
